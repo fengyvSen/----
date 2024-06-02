@@ -28,24 +28,35 @@ let isValid:boolean=true;
 
 function isValidBST(root: TreeNode | null): boolean {
     isValid=true;
-    traverseNumTrees(root,null,null);
-    return isValid;
+    // traverseNumTrees(root,null,null);
+    // return isValid;
+    return isBST(root,null,null);
 };
 // 限定左子树的最大值是 root.val，右子树的最小值是 root.val
-function traverseNumTrees(root: TreeNode | null,min: TreeNode | null,max: TreeNode | null):TreeNode | null {
-    if(root===null||!isValid) return ;
+// function traverseNumTrees(root: TreeNode | null,min: TreeNode | null,max: TreeNode | null):TreeNode | null {
+//     if(root===null||!isValid) return ;
     
-    if (isValid&&min&&min.val>=root.val) {
-        isValid=false;
-        return;
+//     if (isValid&&min&&min.val>=root.val) {
+//         isValid=false;
+//         return;
+//     }
+//     if (isValid&&max&&max.val<=root.val) {
+//         isValid=false;
+//         return;
+//     }
+//     traverseNumTrees(root.left,min,root)
+//     traverseNumTrees(root.right,root,max)
+// };
+function isBST(root:TreeNode | null,leftMax:TreeNode | null,rightMax:TreeNode | null):boolean{
+    if(root===null) return true;
+    if(leftMax&&root.val<=leftMax.val || rightMax&&root.val>=rightMax.val){
+        return false;
+    }else if(isBST(root.left,leftMax,root)&&isBST(root.right,root,rightMax)){
+        return true;
+    }else{
+        return false;
     }
-    if (isValid&&max&&max.val<=root.val) {
-        isValid=false;
-        return;
-    }
-    traverseNumTrees(root.left,min,root)
-    traverseNumTrees(root.right,root,max)
-};
+}
 
 // @lc code=end
 
